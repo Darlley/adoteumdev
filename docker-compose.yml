@@ -30,7 +30,11 @@ services:
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
+<<<<<<< HEAD
             - '${FORWARD_DB_PORT:-3320}:3306'
+=======
+            - '${FORWARD_DB_PORT:-3310}:3315'
+>>>>>>> feature/new-install-with-vite
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: "%"
