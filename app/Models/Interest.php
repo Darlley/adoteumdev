@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Interest extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
-=======
 
     protected $casts = ['data' => 'array'];
->>>>>>> feature/new-install-with-vite
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }
