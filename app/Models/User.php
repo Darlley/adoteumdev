@@ -42,7 +42,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Interest(){
+    public function interest(){
         return $this->hasOne(Interest::class);
+    }
+
+    public function preference(){
+        return $this->hasOne(Preference::class);
+    }
+
+    public function sentActions(){
+        return $this->hasMany(Action::class, 'from_user_id', 'id');
+    }
+
+    public function receivedActions(){
+        return $this->hasMany(Action::class, 'to_user_id', 'id');
+    }
+
+    public function sentMessages(){
+        return $this->hasMany(Message::class, 'from_user_id', 'id');
+    }
+
+    public function receivedMessages(){
+        return $this->hasMany(Message::class, 'to_user_id', 'id');
     }
 }
