@@ -24,7 +24,9 @@
                 this.animate(this.$refs.slideContainer, ['skew-x-12', 'left-full'], 'add', 1000, () => {
                     this.animate(this.$refs.slideContainer, ['skew-x-12'], 'remove', 900, () => {
                         this.animate(this.$refs.logo, ['scale-100'], 'add', 200, () => {
-                            this.animate(this.$refs.logoTitle, ['scale-100'], 'add', 300)
+                            this.animate(this.$refs.logoTitle, ['scale-100'], 'add', 300, () => {
+                                setTimeout(() => window.location.href = '/home', 2500)
+                            })
                         })
                     })
                 })
