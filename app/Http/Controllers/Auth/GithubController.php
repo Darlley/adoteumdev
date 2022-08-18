@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -25,22 +26,20 @@ class GithubController extends Controller
             // dd($user, $user->token);
             $user = Socialite::driver('github')->user();
 
-
             DB::transaction(function () use($user) {
 
                 $this->authUser = User::updateOrCreate([
                     'email' => $user->email,
                     ], [
                     'name' =>$user->name,
-                    'github_user' => $user->token,
                     'password' => Hash::make(Str::random(7)),
-                ]);
+                ])->load('interest', 'preference');
 
                 Profile::updateOrCreate([
                     'user_id' => $this->authUser->id,
                     ], [
                     'provider' => self::NAME,
-                    'auth_id' => $user->id,
+                    'provider_user_id' => $user->id,
                     'nickname' => $user->nickname,
                     'avatar' => $user->avatar,
                     'data' => json_encode($user->user)
@@ -48,15 +47,17 @@ class GithubController extends Controller
 
             }, 3);
 
+            Auth::login($this->authUser);
+
             if(is_null($this->authUser->interest) ){
-                return redirect()->route('');
+                return redirect()->route('app.interest');
             }
 
             if(is_null($this->authUser->preference) ){
-                return redirect()->route('');
+                return redirect()->route('app.preference');
             }
 
-            return redirect()->route('');
+            return redirect()->route('app.developers');
         
         }catch(\Exception $exception){
             DB::rollBack();

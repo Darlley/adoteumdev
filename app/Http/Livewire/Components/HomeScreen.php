@@ -12,13 +12,13 @@ class HomeScreen extends Component
         return view('livewire.components.home-screen');
     }
 
-    public function loginAsDev()
+    public function loginAsGithub()
     {
         return redirect()->route('socialite.redirect-github');
     }
     
-    public function loginAsRecruiter()
+    public function loginAsGoogle()
     {
-
+        return redirect()->route('socialite.redirect-google');
     }
 }
