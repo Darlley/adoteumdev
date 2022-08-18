@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\GithubController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -9,7 +10,10 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\Components\DeveloperScreen;
 use App\Http\Livewire\Components\HomeScreen;
+use App\Http\Livewire\Components\InterestScreen;
+use App\Http\Livewire\Components\PreferenceScreen;
 use App\Http\Livewire\Components\SplashScreen;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -27,6 +31,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', SplashScreen::class)->name('app.splash');
 Route::get('/home', HomeScreen::class)->name('app.home');
+
+Route::get('/interesses', InterestScreen::class)->name('app.interest');
+Route::get('/preferencias', PreferenceScreen::class)->name('app.preference');
+Route::get('/desenvolvedores', DeveloperScreen::class)->name('app.developers');
 
 // Route::middleware('guest')->group(function () {
 //     Route::get('login', Login::class)
@@ -68,3 +76,9 @@ Route::get('/auth/redirect', function () {
 })->name('socialite.redirect-github');
 
 Route::get('/auth/callback', GithubController::class);
+
+Route::get('/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('socialite.redirect-google');
+
+Route::get('/auth/google', GoogleController::class);
