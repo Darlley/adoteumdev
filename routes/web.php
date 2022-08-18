@@ -32,9 +32,11 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/', SplashScreen::class)->name('app.splash');
 Route::get('/home', HomeScreen::class)->name('app.home');
 
-Route::get('/interesses', InterestScreen::class)->name('app.interest');
-Route::get('/preferencias', PreferenceScreen::class)->name('app.preference');
-Route::get('/desenvolvedores', DeveloperScreen::class)->name('app.developers');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/interesses', InterestScreen::class)->name('app.interest');
+    Route::get('/preferencias', PreferenceScreen::class)->name('app.preference');
+    Route::get('/desenvolvedores', DeveloperScreen::class)->name('app.developers');
+});
 
 // Route::middleware('guest')->group(function () {
 //     Route::get('login', Login::class)
