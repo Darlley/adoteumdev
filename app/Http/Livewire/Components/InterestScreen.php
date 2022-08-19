@@ -8,10 +8,11 @@ class InterestScreen extends Component
 {
     public $user;
     public $avatar;
+    public $name;
 
     public function mount()
     {
-        return $this->user = auth()->user()->profile;
+        $this->user = auth()->user()->load('profile');
     }
 
     public function render()
