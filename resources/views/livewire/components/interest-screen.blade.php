@@ -12,6 +12,15 @@
         </div>
     </div>
 
-    <x-interests :categories="$categories" />
-    
+    <form action="#" method="POST" class="mt-8">
+        <div class="overflow-hidden sm:rounded-md">
+            <div class="">
+                <x-interests :categories="$categories" />
+            </div>
+            <div class="py-3 text-right">
+                <button type="submit"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-400 hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 w-full md:w-max">Save</button>
+            </div>
+        </div>
+    </form>
 </div>
