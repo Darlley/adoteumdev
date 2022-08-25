@@ -1,7 +1,3 @@
-@props([
-    'categories',
-])
-
 <div class="grid grid-cols-6 gap-6" x-data='form()'>
     @foreach($categories as $category)
     <div class="col-span-6 sm:col-span-3">
@@ -21,23 +17,22 @@
     
     function form(){
         return {
-            categories: @entangle('categories'),
+            categorys: @this.categories,
             changeSkill(category, event){
-                console.log(JSON.stringify(this.categories))
-                // const cat = this.categories.find((item) => item.name === category)
-                // console.log(cat.skills)
-                // const skill = cat.skills.find(item => item.id === parseInt(event.target.value))
-                // if(this.payload.hasOwnProperty(category)){
-                //     this.payload[category].push({
-                //         ...skill,
-                //         level: 0
-                //     })
-                // }else{
-                //     this.payload[category] = [{
-                //         ...skill,
-                //         level: 0
-                //     }]
-                // }
+                const cat = this.categorys.find((item) => item.name === category)
+                const skill = cat.skills.find(item => item.id === parseInt(event.target.value))
+                
+                if(this.payload.hasOwnProperty(category)){
+                    this.payload[category].push({
+                        ...skill,
+                        level: 0
+                    })
+                }else{
+                    this.payload[category] = [{
+                        ...skill,
+                        level: 0
+                    }]
+                }
             }
         }
     }

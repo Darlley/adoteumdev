@@ -1,8 +1,8 @@
 <div class="max-w-6xl m-auto px-8">
     <div class="mt-8 flex flex-col items-center text-center gap-2">
-        <div>
-            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-white">
-                <img src="{{ $user->profile->avatar }}" alt="">
+        <div class="">
+            <span class="flex rounded-full overflow-hidden bg-white">
+                <img src="{{ $avatar }}" alt="" class="flex h-12 w-12">
             </span>
         </div>
         <div class="px-4 sm:px-0">
