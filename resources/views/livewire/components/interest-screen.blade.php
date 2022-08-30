@@ -17,17 +17,33 @@
             <div class="overflow-hidden sm:rounded-md">
                 <div class="">
                     <div class="grid grid-cols-6 gap-6" >
+
                         <template x-for='category in categories'>
+
                             <div class="col-span-6 sm:col-span-3">
+                                
                                 <label for="country" class="block text-sm font-medium text-gray-700" x-text="category.name"></label>
                                 <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" x-on:change="changeSkill(category.name, $event)">
                                     <option>Selecionar</option>
+                                    
                                     <template x-for='skill in category.skills'>
-                                        <option value="skill.id" x-text="skill.name"></option>
+                                        <option :value="skill.id" x-text="skill.name"></option>
                                     </template>
+                                    
                                 </select>
+                                
+                                <template x-if='payload.hasOwnProperty(category.name)'>
+                                    <ul>
+                                        <template x-for='skill in payload[category.name]'>
+                                            <li x-text="skill.name"></li>    
+                                        </template>
+                                    </ul>
+                                </template>
+                                <li>ok</li>
                             </div>
+
                         </template>
+
                     </div>
                 </div>
                 <div class="py-3 text-right">
@@ -47,18 +63,16 @@
                 categories: categories,
                 payload: {},
                 changeSkill(selectedCategory, event){
-                    console.log(typeof this.categories)
                     const category = this.categories.find((item) => item.name === selectedCategory)
                     const skill = category.skills.find(item => item.id === parseInt(event.target.value))
-                    console.log(category.skills)
                     
-                    if(this.payload.hasOwnProperty(category)){
-                        this.payload[category].push({
+                    if(this.payload.hasOwnProperty(selectedCategory)){
+                        this.payload[selectedCategory].push({
                             ...skill,
                             level: 0
                         })
                     }else{
-                        this.payload[category] = [{
+                        this.payload[selectedCategory] = [{
                             ...skill,
                             level: 0
                         }]
