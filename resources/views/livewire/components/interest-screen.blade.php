@@ -20,7 +20,7 @@
                     <template x-for='category in categories'>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="country" class="block text-sm font-medium text-gray-700" x-text="category.name"></label>
-                            <select :id="category.name" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" x-on:change="changeSkill(category.name, $event)">
+                            <select :disabled="!category.skills.length" :id="category.name" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" x-on:change="changeSkill(category.name, $event)">
                                 <option value="0">Selecionar</option>
                                 <template x-for='skill in category.skills'>
                                     <option :value="skill['id']" x-text="skill.name"></option>
@@ -97,15 +97,30 @@
                         this.payload[selectedCategory] = [{
                             ...skill,
                             level: 0
-                        }]
+                        }] 
                     }
 
-                    const newCategory = category.filter((item) => item.id !== skill)
+                    const newSkills = category.skills.filter((item) => item.id !== skill.id)
+                    this.categories = this.categories.map(item => {
+                        if(item.name === selectedCategory){
+                            item.skills = newSkills
+                        }
+
+                        return item
+                    })
 
                     document.querySelector(`#${selectedCategory}`).value = '0'
                 },
                 removeSkill(payloadCategory, position){
-                    this.payload[payloadCategory].splice(position, 1)
+                    const skill = this.payload[payloadCategory].splice(position, 1)
+
+                    this.categories = this.categories.map(item => {
+                        if(item.name === payloadCategory){
+                            item.skills.push(skill[0])
+                        }
+
+                        return item;
+                    })
                 }
             }
         }
