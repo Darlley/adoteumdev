@@ -13,5 +13,7 @@ class Profile extends Model
         'user_id', 'provider', 'provider_user_id', 'nickname', 'avatar', 'data'
     ];
 
-    
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
